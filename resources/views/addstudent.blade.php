@@ -2,7 +2,17 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 	
 	<title>Add Students Data</title>
 </head>
@@ -22,12 +32,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="addform">
+        <div >
+        <form role="form" id="form">
         	{{csrf_field()}}
   <div class="form-group">
   	<strong></strong>
     <label for="fname">First Name</label>
-    <input type="text" name="fname" class="form-control" id="fname" aria-describedby="fname">
+    <div id="demo" style="color: red;"></div>
+    <input type="text" name="fname" class="form-control" onautocompleteerror="your" id="fname">
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
   <div class="form-group">
@@ -43,8 +55,9 @@
     <input type="text" name="section" class="form-control" id="section">
   </div>
  
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onclick="myFunction()">Submit</button>
 </form>
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -75,14 +88,65 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <script type="text/javascript">
+
+ //function myFunction() {
+ // var inpObj = document.getElementById("fname");
+  //if (!inpObj.checkValidity()) {
+ //   document.getElementById("demo").innerHTML = inpObj.validationMessage;
+ // } else {
+  //  document.getElementById("demo").innerHTML = "Input OK";
+  //} 
+//} 
+function auto(){
+  rules:{
+    fname:
+    {
+    required:true
+    }
+  }
+}
+
+ function myFunction() {
+   var text;
+
+//   // Get the value of the input field with id="numb"
+   var fname = document.getElementById("fname").value;
+
+//   // If x is Not a Number or less than one or greater than 10
+   if (fname=="") {
+     text = "First name is not included";
+
+ 
+//     alert("First Name must be filled out");
+//     return false;
+  }
+     else if(fname.length < 4)
+{
+  text = "At least 4 characters needed";
+}
+
+    else {
+
+//     alert("Must be filled out");
+//     return false;
+     text = "&#10003;";
+   }
+   document.getElementById("demo").innerHTML = text;
+ }
+
+
   	$(document).ready(function(){
-$('#addform').on('submit',function(e)
+
+
+
+
+$('#form').on('submit',function(e)
 {
 	e.preventDefault();
 	$.ajax({
 		type : "POST",
 		url : "/studentadd",
-		data : $('#addform').serialize(),
+		data : $('#form').serialize(),
 		success : function(response)
 		{
 			console.log(response)
@@ -99,6 +163,8 @@ $('#addform').on('submit',function(e)
 		}
 	});
 });
+
+
   		});
   </script>
 </body>
