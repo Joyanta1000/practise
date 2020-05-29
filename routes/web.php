@@ -53,3 +53,5 @@ Route::get('ExportClients','excelController@ExportClients');
 Route::get('/auto', function () {
     return view('googleplace.autocomplete');
 });
+
+Route::get('scrape','ScraperController@scrape');

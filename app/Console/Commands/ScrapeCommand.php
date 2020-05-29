@@ -44,8 +44,9 @@ class ScrapeCommand extends Command
         $client = new Client(HttpClient::create(['timeout' => 60]));
 
         $crawler = $client->request('GET', 'https://en.wikipedia.org/wiki/COVID-19_pandemic_in_Bangladesh');
-        $crawler->filter('.wikitable')->each(function ($node) {
-    print $node->text()."\n";
-});
+         $crawler->filter('.wikitable')->each(function ($node) {
+     print $node->text()."\n";
+ });
+        
     }
 }
